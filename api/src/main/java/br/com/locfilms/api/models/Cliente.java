@@ -2,11 +2,13 @@ package br.com.locfilms.api.models;
 
 import java.io.Serializable;
 
+import br.com.locfilms.api.dto.ClienteCreateDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 //Anotations
@@ -21,7 +23,8 @@ public class Cliente implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "id", sequenceName = "cliente_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(nullable = false, length = 160)
@@ -32,6 +35,16 @@ public class Cliente implements Serializable{
 	
 	@Column(nullable = true, length = 60)
 	private String telefone;
+	
+	public Cliente() {
+		
+	}
+	
+	public Cliente(ClienteCreateDTO clienteCreateDTO) {
+		this.nome = clienteCreateDTO.getNome();
+		this.email = clienteCreateDTO.getEmail();			
+		this.telefone = clienteCreateDTO.getTelefone();
+	}
 	
     // Getters and Setters
 

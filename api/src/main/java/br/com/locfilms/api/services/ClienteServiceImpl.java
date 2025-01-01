@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.locfilms.api.dto.ClienteCreateDTO;
 import br.com.locfilms.api.dto.ClienteShowDTO;
 import br.com.locfilms.api.mapper.MapStructClienteMapper;
+import br.com.locfilms.api.models.Cliente;
 import br.com.locfilms.api.repositories.ClienteRepository;
 
 @Service
@@ -32,6 +34,13 @@ public class ClienteServiceImpl implements ClienteService {
 		this.clienteRepository = clienteRepository;
 		this.clienteMapper = clienteMapper;
 		
+	}
+
+	@Override
+	public ClienteShowDTO createCliente(ClienteCreateDTO clienteCreateDTO) {
+		Cliente novoCliente = clienteMapper.toModel(clienteCreateDTO);
+		Cliente response = clienteRepository.save(novoCliente);
+		return clienteMapper.clienteToClienteShowDTO(response);
 	}
 
 	
