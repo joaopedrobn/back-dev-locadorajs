@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.locfilms.api.dto.ClienteCreateDTO;
 import br.com.locfilms.api.dto.ClienteShowDTO;
+import br.com.locfilms.api.exception.ClienteNotFoundException;
 import br.com.locfilms.api.mapper.MapStructClienteMapper;
 import br.com.locfilms.api.models.Cliente;
 import br.com.locfilms.api.repositories.ClienteRepository;
@@ -41,6 +42,30 @@ public class ClienteServiceImpl implements ClienteService {
 		Cliente novoCliente = clienteMapper.toModel(clienteCreateDTO);
 		Cliente response = clienteRepository.save(novoCliente);
 		return clienteMapper.clienteToClienteShowDTO(response);
+	}
+
+	@Override
+	public ClienteShowDTO listaClienteUnico(Long id) throws ClienteNotFoundException {
+		Cliente cliente = clienteRepository.findById(id)
+				.orElseThrow(() -> new ClienteNotFoundException(id));			
+		return clienteMapper.clienteToClienteShowDTO(cliente);
+	}
+
+	@Override
+	public ClienteShowDTO atualizaCliente(Long id, ClienteCreateDTO clienteCreateDTO) throws ClienteNotFoundException {
+		Cliente atualizaCliente = clienteMapper.toModel(clienteCreateDTO);
+		Cliente buscaCliente = clienteRepository.findById(id)
+				.orElseThrow(() -> new ClienteNotFoundException(id));
+		atualizaCliente.setId(id);
+		Cliente response = clienteRepository.save(atualizaCliente);
+		return clienteMapper.clienteToClienteShowDTO(atualizaCliente);
+	}
+
+	@Override
+	public void excluiCliente(Long id) throws ClienteNotFoundException {
+		Cliente cliente = clienteRepository.findById(id)
+				.orElseThrow(() -> new ClienteNotFoundException(id));
+		clienteRepository.deleteById(id);
 	}
 
 	
