@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +20,8 @@ public class Filme implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "id", sequenceName = "filme_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	
 	@Column(nullable = false, length = 160)
@@ -27,6 +29,12 @@ public class Filme implements Serializable{
 	
 	@Column(nullable = false, length = 80)
 	private String genero;
+	
+	public Filme() {
+		
+		
+		
+	}
 	
 	//Getters and Setters
 	
