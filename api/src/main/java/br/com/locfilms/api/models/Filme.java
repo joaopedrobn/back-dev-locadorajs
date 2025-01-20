@@ -2,6 +2,7 @@ package br.com.locfilms.api.models;
 
 import java.io.Serializable;
 
+import br.com.locfilms.api.dto.FilmeCreateDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,8 +33,11 @@ public class Filme implements Serializable{
 	
 	public Filme() {
 		
-		
-		
+	}
+	
+	public Filme(FilmeCreateDTO filmeCreateDTO) {
+		this.nome = filmeCreateDTO.getNome();
+		this.genero = filmeCreateDTO.getGenero ();
 	}
 	
 	//Getters and Setters

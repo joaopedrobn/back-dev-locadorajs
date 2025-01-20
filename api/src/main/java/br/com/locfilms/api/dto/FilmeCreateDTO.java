@@ -26,7 +26,7 @@ public class FilmeCreateDTO implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getEmail() {
+	public String getGenero() {
 		return genero;
 	}
 
