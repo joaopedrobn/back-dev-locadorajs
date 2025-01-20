@@ -38,7 +38,7 @@ public class ClienteController {
 	
 	@GetMapping("/msg")
 	public String listMsg() {
-		return "Hello World";
+		return "Clientes!";
 	}
 	
 	//Endpoint Lista Todos Clientes
