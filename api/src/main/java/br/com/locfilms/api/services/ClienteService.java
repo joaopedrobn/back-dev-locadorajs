@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.locfilms.api.dto.ClienteCreateDTO;
 import br.com.locfilms.api.dto.ClienteShowDTO;
+import br.com.locfilms.api.dto.LoginDTO;
 import br.com.locfilms.api.exception.ClienteNotFoundException;
 
 public interface ClienteService {
@@ -19,4 +20,7 @@ public interface ClienteService {
 	ClienteShowDTO atualizaCliente(Long id, ClienteCreateDTO clienteCreateDTO) throws ClienteNotFoundException;
 	
 	void excluiCliente(Long id) throws ClienteNotFoundException;
+	
+	ClienteShowDTO login (LoginDTO loginDTO) throws ClienteNotFoundException;
+	
 }
