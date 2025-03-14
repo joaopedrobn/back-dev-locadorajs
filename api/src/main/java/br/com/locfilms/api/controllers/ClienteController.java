@@ -13,6 +13,7 @@ import br.com.locfilms.api.dto.LoginDTO;
 import br.com.locfilms.api.exception.ClienteNotFoundException;
 import br.com.locfilms.api.services.ClienteService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
