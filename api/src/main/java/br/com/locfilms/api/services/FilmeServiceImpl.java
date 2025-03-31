@@ -67,6 +67,15 @@ public class FilmeServiceImpl implements FilmeService {
 				.orElseThrow(() -> new FilmeNotFoundException(id));
 		filmeRepository.deleteById(id);
 	}
+	
+	@Override
+	public List<FilmeShowDTO> listarDisponiveis() {
+		return this.filmeRepository.findAll()
+				.stream()
+				.filter(filme -> filme.getStatus().equals("Disponível"))
+				.map(filme -> this.filmeMapper.filmeToFilmeShowDTO(filme))
+				.collect(Collectors.toList());
+	}
 
 	
 	

@@ -31,10 +31,21 @@ public class Filme implements Serializable{
 	@Column(nullable = false, length = 80)
 	private String genero;
 	
+	@Column(nullable = false, length = 60)
+	private String status;
+	
 	public Filme() {
 		
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Filme(FilmeCreateDTO filmeCreateDTO) {
 		this.nome = filmeCreateDTO.getNome();
 		this.genero = filmeCreateDTO.getGenero ();

@@ -12,6 +12,10 @@ public interface FilmeService {
 	
 	List<FilmeShowDTO> listar();
 	
+	//lista filmes disponiveis
+	
+	List<FilmShowDTO> listarDisponiveis();
+	
 	FilmeShowDTO createFilme(FilmeCreateDTO filmeCreateDTO);
 
 	FilmeShowDTO listaFilmeUnico(Long id) throws FilmeNotFoundException;
