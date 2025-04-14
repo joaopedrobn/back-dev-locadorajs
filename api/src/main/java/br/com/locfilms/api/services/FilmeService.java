@@ -8,13 +8,11 @@ import br.com.locfilms.api.exception.FilmeNotFoundException;
 
 public interface FilmeService {
 	
-	//Lista todos os filmes
-	
+	// Lista todos os filmes
 	List<FilmeShowDTO> listar();
 	
-	//lista filmes disponiveis
-	
-	List<FilmShowDTO> listarDisponiveis();
+	// Lista filmes disponíveis
+	List<FilmeShowDTO> listarDisponiveis();
 	
 	FilmeShowDTO createFilme(FilmeCreateDTO filmeCreateDTO);
 

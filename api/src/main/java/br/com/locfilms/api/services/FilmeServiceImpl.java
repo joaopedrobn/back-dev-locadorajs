@@ -14,32 +14,29 @@ import br.com.locfilms.api.models.Filme;
 import br.com.locfilms.api.repositories.FilmeRepository;
 
 @Service
-
 public class FilmeServiceImpl implements FilmeService {
 
-	@Override
-	public List<FilmeShowDTO> listar() {	
-		return this.filmeRepository.findAll()
-				.stream().map(filme ->
-				this.filmeMapper.filmeToFilmeShowDTO(filme))
-				.collect(Collectors.toList());
-	}
-	
-	private FilmeRepository filmeRepository;
-	private MapStructFilmeMapper filmeMapper;
-	
+	private final FilmeRepository filmeRepository;
+	private final MapStructFilmeMapper filmeMapper;
+
 	@Autowired
-	public FilmeServiceImpl(FilmeRepository filmeRepository, 
-			MapStructFilmeMapper filmeMapper) {
-		
+	public FilmeServiceImpl(FilmeRepository filmeRepository, MapStructFilmeMapper filmeMapper) {
 		this.filmeRepository = filmeRepository;
 		this.filmeMapper = filmeMapper;
-		
+	}
+
+	@Override
+	public List<FilmeShowDTO> listar() {
+		return filmeRepository.findAll()
+				.stream()
+				.map(filmeMapper::filmeToFilmeShowDTO)
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public FilmeShowDTO createFilme(FilmeCreateDTO filmeCreateDTO) {
 		Filme novoFilme = filmeMapper.toModel(filmeCreateDTO);
+		novoFilme.setStatus("Disponível");
 		Filme response = filmeRepository.save(novoFilme);
 		return filmeMapper.filmeToFilmeShowDTO(response);
 	}
@@ -47,18 +44,19 @@ public class FilmeServiceImpl implements FilmeService {
 	@Override
 	public FilmeShowDTO listaFilmeUnico(Long id) throws FilmeNotFoundException {
 		Filme filme = filmeRepository.findById(id)
-				.orElseThrow(() -> new FilmeNotFoundException(id));			
+				.orElseThrow(() -> new FilmeNotFoundException(id));
 		return filmeMapper.filmeToFilmeShowDTO(filme);
 	}
 
 	@Override
 	public FilmeShowDTO atualizaFilme(Long id, FilmeCreateDTO filmeCreateDTO) throws FilmeNotFoundException {
-		Filme atualizaFilme = filmeMapper.toModel(filmeCreateDTO);
-		Filme buscaFilme = filmeRepository.findById(id)
+		filmeRepository.findById(id)
 				.orElseThrow(() -> new FilmeNotFoundException(id));
+		
+		Filme atualizaFilme = filmeMapper.toModel(filmeCreateDTO);
 		atualizaFilme.setId(id);
 		Filme response = filmeRepository.save(atualizaFilme);
-		return filmeMapper.filmeToFilmeShowDTO(atualizaFilme);
+		return filmeMapper.filmeToFilmeShowDTO(response);
 	}
 
 	@Override
@@ -67,16 +65,13 @@ public class FilmeServiceImpl implements FilmeService {
 				.orElseThrow(() -> new FilmeNotFoundException(id));
 		filmeRepository.deleteById(id);
 	}
-	
+
 	@Override
 	public List<FilmeShowDTO> listarDisponiveis() {
-		return this.filmeRepository.findAll()
+		return filmeRepository.findAll()
 				.stream()
-				.filter(filme -> filme.getStatus().equals("Disponível"))
-				.map(filme -> this.filmeMapper.filmeToFilmeShowDTO(filme))
+				.filter(filme -> "Disponível".equals(filme.getStatus()))
+				.map(filmeMapper::filmeToFilmeShowDTO)
 				.collect(Collectors.toList());
 	}
-
-	
-	
 }

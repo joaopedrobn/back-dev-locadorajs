@@ -71,4 +71,11 @@ public class FilmeController {
         filmeService.excluiFilme(id);
         return ResponseEntity.status(HttpStatus.OK).body("Filme " + id + " excluído com sucesso");
     }
+    
+    // Endpoint Lista Filmes Disponiveis
+    @GetMapping("/disponiveis")
+    public ResponseEntity<List<FilmeShowDTO>> listarDisponiveis() {
+        List<FilmeShowDTO> filmes = filmeService.listarDisponiveis();
+        return ResponseEntity.status(HttpStatus.OK).body(filmes);
+    }
 }
